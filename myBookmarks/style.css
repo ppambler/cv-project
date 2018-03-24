@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+}
+kbd {
+    border: 1px solid red;
+    /* 不到万不得已不要加宽度（书写原则），可是如今就是万不得已了啊！保证每个键盘都一样宽 */
+    width: 4em;
+    height: 4em;
+    /* 不推荐这样 */
+    display: inline-block;
+    /* 改键盘小写为大写 */
+    text-transform: uppercase;
+    position: relative;
+}
+kbd > button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+kbd:hover > button {
+    display: inline-block;
+}
+main {
+    text-align: center;
+}
+#mainX {
+    display: inline-block;
+}
+/* 要有键盘的样子 */
+#mainX > div:nth-child(2) {
+    /* 2em的一半，即一个键的一半大小 */
+    margin-left: 2em;  
+}
+#mainX > div:nth-child(3) {
+    margin-left: 4em;
+}
