@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hans">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,86 +8,166 @@
     <title>我的导航</title>
     <link rel="stylesheet" href="./style.css">
 </head>
-<body>  
+
+<body>
     <header></header>
     <main>
-        <div class="wrapper" id="mainX"></div>
+        <div class="wrapper" id="main"></div>
     </main>
     <footer></footer>
     <script>
+        //1.初始化数据
+        var hashA = init()
+        var keys = hashA['keys']
+        var hash = hashA['hash']
+
+
+        //2.生成键盘
+        // 遍历keys,生成kbd元素
+        generatorKeyboard(keys, hash)
+
+
+        //3.监听用户动作
+        listenToUser(hash)
+
+
+        // 下面是工具函数
+        function getFromLocalStorage(name) {
+            return JSON.parse(localStorage.getItem(name) || 'null')
+        }
+
+        function tag(tagName) {
+            return document.createElement(tagName);
+        }
+
+        function createSpan(textContent) {
+            var span = tag('span')
+            span.textContent = textContent
+            span.className = 'text'
+            return span
+        }
+
+        function createButton(id, textContent) {
+            var button = tag('button')
+            button.textContent = textContent
+            console.log(id)
+            button.id = id
+            button.onclick = function (TTT) {
+                var button2 = TTT['target'] //拿到用户点击的元素
+                var img2 = button2.previousSibling //拿到button2的哥哥
+                var key = button2['id'] //qwer
+                var x = prompt('给我一个网址')
+                hash[key] = x
+                img2.src = 'http://' + x + '/favicon.ico'
+                img2.onerror = function (error) {
+                    error.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+                }
+
+                // 存档,zzz是一个桶的名字，而localStorage有很多个桶，
+                // setItem接受字符串参数，所以需要把变量hash改为字符串
+                localStorage.setItem('zzz', JSON.stringify(hash))
+            }
+            return button
+        }
+
+        function createImage(domain) {
+            var img = tag('img')
+            if (domain) {
+                img.src = 'http://' + domain + '/favicon.ico'
+            } else {
+                img.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+            }
+            img.onerror = function (error) {
+                error.target.src = '//i.loli.net/2017/11/10/5a05afbc5e183.png'
+            }
+            return img
+        }
+
+        function generatorKeyboard(keys, hash) {
+            for (var index = 0; index < keys['length']; index++) {
+                var div = tag('div')
+                div.className = 'row'
+
+                main.appendChild(div);
+
+                var row = keys[index]; //1、2、3个数组
+                console.log(row)
+                for (var index2 = 0; index2 < row['length']; index2++) {
+                    var span = createSpan(row[index2])
+
+                    var button = createButton(row[index2], '编辑')
+
+                    var img = createImage(hash[row[index2]])
+
+                    var kbd = tag('kbd')
+                    kbd.className = 'key'
+
+                    kbd.appendChild(span)
+                    kbd.appendChild(img)
+                    kbd.appendChild(button)
+
+                    div.appendChild(kbd)
+                }
+            }
+        }
+
+        function init() {
             keys = {
-                '0': ['q','w','e','r','t','y','u','i','o','p'],
-                '1': ['a','s','d','f','g','h','j','k','l'],
-                '2': ['z','x','c','v','b','n','m'],
+                '0': ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+                '1': ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+                '2': ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
                 'length': 3
             }
             hash = {
                 'q': 'qq.com',
                 'w': 'weibo.com',
-                'e': 'ele.me' ,
-                'r': '' ,
-                't': '' ,
-                'y': '' ,
-                'u': '' ,
-                'i': '' ,
-                'o': '' ,
-                'p': '' ,
-                'a': '' ,
-                's': '' ,
-                'd': '' ,
-                'f': '' ,
-                'g': '' ,
-                'h': '' ,
-                'j': '' ,
-                'k': '' ,
-                'l': '' ,
-                'z': '' ,
-                'x': '' ,
-                'c': '' ,
-                'v': '' ,
-                'b': '' ,
-                'n': '' ,
-                'm': '' 
+                'e': 'ele.me',
+                'r': '',
+                't': '',
+                'y': '',
+                'u': '',
+                'i': '',
+                'o': '',
+                'p': '',
+                'a': '',
+                's': '',
+                'd': '',
+                'f': '',
+                'g': '',
+                'h': '',
+                'j': '',
+                'k': '',
+                'l': '',
+                'z': '',
+                'x': '',
+                'c': '',
+                'v': '',
+                'b': '',
+                'n': '',
+                'm': ''
             }
-        // 取出存在浏览器里东西，数据放在叫zzz的桶里面,这里需要把字符串转化为hash值，而且还要判断是否存在桶
-        hashInLocalStorage = JSON.parse( localStorage.getItem('zzz') || '0')
-        if (hashInLocalStorage) {
-            hash = hashInLocalStorage
-        }
-        index = 0;
-        while(index < keys['length']) {
-            divX = document.createElement('div');
-            mainX.appendChild(divX);
-            row = keys[index];
-            index2 = 0
-            while (index2 < row['length']) {
-                kbdX = document.createElement('kbd')
-                kbdX.textContent = row[index2]
-                buttonX = document.createElement('button')
-                buttonX.textContent = '编辑'
-                buttonX.id = row[index2]
-                buttonX.onclick = function(TTT) {
-                    key = TTT['target']['id']
-                    x = prompt('给我一个网址')
-                    hash[key] = x
-                    // 存档,zzz是一个桶的名字，而localStorage有很多个桶，
-                    // setItem接受字符串参数，所以需要把变量hash改为字符串
-                    localStorage.setItem('zzz', JSON.stringify(hash))
-                }
-                kbdX.appendChild(buttonX)
-                divX.appendChild(kbdX)
-                index2++;
+            // 取出存在浏览器里东西，数据放在叫zzz的桶里面,这里需要把字符串转化为hash值，而且还要判断是否存在桶
+            var hashInLocalStorage = getFromLocalStorage('zzz')
+            if (hashInLocalStorage) {
+                hash = hashInLocalStorage
             }
-            index++;
+            return {
+                "keys": keys,
+                "hash": hash
+            }
         }
-        
-        document.onkeypress = function(TTT) {
-            key = TTT['key']
-            // console.log(key)
-            website = hash[key]
 
-            window.open('http://'+website,'_blank')
+        function listenToUser(hash) {
+            document.onkeypress = function (TTT) {
+                var key = TTT['key'] //qwer
+                // console.log(key)
+                var website = hash[key]
+                //location.href = 'http://'+website
+                window.open('http://' + website, '_blank')
+            }
         }
+
     </script>
 </body>
+
 </html>
