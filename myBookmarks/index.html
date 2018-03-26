@@ -50,7 +50,6 @@
         function createButton(id, textContent) {
             var button = tag('button')
             button.textContent = textContent
-            console.log(id)
             button.id = id
             button.onclick = function (TTT) {
                 var button2 = TTT['target'] //拿到用户点击的元素
@@ -91,7 +90,6 @@
                 main.appendChild(div);
 
                 var row = keys[index]; //1、2、3个数组
-                console.log(row)
                 for (var index2 = 0; index2 < row['length']; index2++) {
                     var span = createSpan(row[index2])
 
@@ -123,7 +121,7 @@
                 'w': 'weibo.com',
                 'e': 'ele.me',
                 'r': '',
-                't': '',
+                't': 'trello.com',
                 'y': '',
                 'u': '',
                 'i': '',
@@ -138,11 +136,11 @@
                 'j': '',
                 'k': '',
                 'l': '',
-                'z': '',
-                'x': '',
+                'z': 'zhihu.com',
+                'x': 'xiedaimala.com',
                 'c': '',
-                'v': '',
-                'b': '',
+                'v': 'v2ex.com',
+                'b': 'cn.bing.com',
                 'n': '',
                 'm': ''
             }
