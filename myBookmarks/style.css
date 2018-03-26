@@ -5,6 +5,10 @@
 a {
     text-decoration: none;
 }
+body {
+    background: grey url(./images/wall-min.jpg) no-repeat center center;
+    background-size: cover;
+}
 kbd {
     border: 1px solid red;
     /* 不到万不得已不要加宽度（书写原则），可是如今就是万不得已了啊！保证每个键盘都一样宽 */
@@ -24,18 +28,60 @@ kbd > button {
 }
 kbd:hover > button {
     display: inline-block;
+    border-radius: 20%;
 }
 main {
+    display: flex;
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
 }
-#mainX {
+#main {
     display: inline-block;
 }
 /* 要有键盘的样子 */
-#mainX > div:nth-child(2) {
+#main > div:nth-child(2) {
     /* 2em的一半，即一个键的一半大小 */
-    margin-left: 2em;  
+    /* margin-left: 2em;   */
+    /* em不好调节间距 */
+    margin-left: -22px;
 }
-#mainX > div:nth-child(3) {
-    margin-left: 4em;
+#main > div:nth-child(3) {
+    /* margin-left: 4em; */
+    margin-left: -80px;
+}
+.wrapper {
+    background: rgba(130, 107, 82, 0.1);
+    border-radius: 10px;
+}
+.key {
+    width: 50px;
+    height: 40px;
+    background: linear-gradient(to bottom, #282a28 0%,#111111 100%);
+    border: none;
+    color: #D0D0D0;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px #1A1B1C, 0 0 0 2px #1F2020, 0 3px 0 2px #080808;
+    font-size: 16px;
+    font-family: helvetica;
+    position: relative;
+}    
+.row {
+    margin: 20px;
+}
+.row .key {
+    margin: 0 10px;
+}
+.key .text {
+    position: absolute;
+    top: 2px;
+    left: 4px;
+}
+.key img {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 4px;
+    bottom: 2px;
 }
